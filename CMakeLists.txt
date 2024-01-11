@@ -4,13 +4,7 @@ project(PrimeFactorizer LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# if (NOT CMAKE_BUILD_TYPE)
-#     set(CMAKE_BUILD_TYPE "Release")
-# endif ()
-
-# if (CMAKE_BUILD_TYPE STREQUAL "Release")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast") #time to fly
-# endif ()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast -march=native -flto ") #time to fly
 
 # Add Pybind11
 include(FetchContent)
@@ -21,6 +15,5 @@ FetchContent_Declare(
         GIT_TAG v${PYBIND11_VERSION}
 )
 FetchContent_MakeAvailable(pybind11)
-
 
 pybind11_add_module(PrimeFactorizer MODULE prime.cpp main.cpp)

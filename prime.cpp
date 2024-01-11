@@ -1,51 +1,36 @@
 #include <vector>
 #include <iostream>
 #include "prime.h"
+#include <cstring>
 
 using namespace std;
 
-vector<int> sieve() {
-    vector<bool> primes(2500, true);
-    primes[0] = false;
-    primes[1] = false;
-
-    for (int i = 2; i < 51; i++) {
-        if (primes[i]) {
-            for (int j = i * i; j < 2500; j += i) {
-                primes[j] = false;
-            }
-        }
-    }
-
-    vector<int> ret;
-    ret.reserve(367); // number of primes
-    for (int i = 2; i < 2500; i++) {
-        if (primes[i]) {
-            ret.push_back(i);
-        }
-    }
-
-    return ret;
-}
-
 vector<vector<int>> PrimeFactorizer::not_disaster() {
-    vector<int> primes = sieve();
+    vector<int> smallest_factors(2500, 2);
 
-    vector<vector<int>> factorizations(2500);
+    for (int i = 3; i < 2500; i += 2) smallest_factors[i] = i;
 
-    for (int i = 2; i < 2500; ++i) {
-        for (int prime : primes) {
-            if (i % prime == 0) {
-                int val = i / prime;
-
-                vector<int> factor_factors = factorizations[val];
-
-                factorizations[i] = factor_factors;
-
-                if (val % prime != 0) {
-                    factorizations[i].push_back(prime);
+    for (int i = 3; i < 2500; i += 2) {
+        // if at this point smallest_factors[i] is still i,
+        // then we know i is prime
+        if (smallest_factors[i] == i) {
+            for (int j = i * i; j < 2500; j += 2 * i) {
+                if (smallest_factors[j] == j) {
+                    smallest_factors[j] = i;
                 }
             }
+        }
+    }
+
+    vector<vector<int>> factorizations(2500);
+    for (int i = 2; i < 2500; ++i) {
+        int val = i / smallest_factors[i];
+        factorizations[i].reserve(50);
+
+        factorizations[i].insert(factorizations[i].end(), factorizations[val].begin(), factorizations[val].end());
+
+        if (val % smallest_factors[i] != 0)  {
+            factorizations[i].push_back(smallest_factors[i]);
         }
     }
 
