@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include "prime.h"
 
 using namespace std;
 
@@ -27,7 +28,7 @@ vector<int> sieve() {
     return ret;
 }
 
-vector<vector<int>> not_disaster() {
+vector<vector<int>> PrimeFactorizer::not_disaster() {
     vector<int> primes = sieve();
 
     vector<vector<int>> factorizations(2500);
@@ -51,16 +52,3 @@ vector<vector<int>> not_disaster() {
     return factorizations;
 }
 
-int main() {
-    vector<vector<int>> res = not_disaster();
-
-
-    // for (int i = 0; i < res.size(); ++i) {
-    //     cout << i << ": [";
-    //     for (auto prime : res[i]) {
-    //         cout << prime << ", ";  
-    //     }
-    //     cout << "]\n";
-    // }
-    return 0;
-}

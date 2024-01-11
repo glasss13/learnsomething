@@ -1,4 +1,6 @@
 import timeit
+import cppimport.import_hook
+import PrimeFactorizer
 
 def sieve():
     primes = [True] * 2500
@@ -11,22 +13,23 @@ def sieve():
     return [i for i in range(2,2500) if primes[i]]
 
 def disasterCode():
-    primes = sieve()
-    print(len(primes))
+    # primes = sieve()
+    # print(len(primes))
 
-    factorizations = [[] for _ in range(2500)]
-    for i in range(2,2500):
-        for prime in primes:
-            if i % prime == 0:
-                val = i // prime
-                # the prime factors of i's factor (excluding j)
-                factor_factors = factorizations[val]
-                # if the factors already has j, don't re-add it
-                if val % prime == 0:
-                    factorizations[i] = factor_factors
-                else:
-                    factorizations[i] = factor_factors + [prime]
-                break
+    # factorizations = [[] for _ in range(2500)]
+    # for i in range(2,2500):
+    #     for prime in primes:
+    #         if i % prime == 0:
+    #             val = i // prime
+    #             # the prime factors of i's factor (excluding j)
+    #             factor_factors = factorizations[val]
+    #             # if the factors already has j, don't re-add it
+    #             if val % prime == 0:
+    #                 factorizations[i] = factor_factors
+    #             else:
+    #                 factorizations[i] = factor_factors + [prime]
+    #             break
+    factorizations = PrimeFactorizer.not_disaster()
     return factorizations
 
 
